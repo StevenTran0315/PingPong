@@ -24,6 +24,9 @@ public class PingPong extends JPanel implements Runnable {
 
     int p1y = 25;
     int p2y = 25;  
+    int bally = 170;
+    int ballx = 230;
+    boolean dir = false;
     
     @Override
     public void paintComponent(Graphics g) {
@@ -32,7 +35,7 @@ public class PingPong extends JPanel implements Runnable {
         g.fillRect(25, p1y, 25, 100);
         g.setColor(Color.black);
         g.fillRect(435, p2y, 25, 100);
-
+        g.fillOval(ballx, bally, 20, 20);
         
     }
 
@@ -45,6 +48,8 @@ public class PingPong extends JPanel implements Runnable {
  
     }
       
+    
+  
     public void run() {
         Action upAction = new AbstractAction(){
               public void actionPerformed(ActionEvent e) {
@@ -91,6 +96,7 @@ public class PingPong extends JPanel implements Runnable {
 
         try {
             while (true) {
+              
                 inputMap.put(KeyStroke.getKeyStroke("W"), "upAction");
                 actionMap.put("upAction", upAction);
                     
@@ -102,6 +108,22 @@ public class PingPong extends JPanel implements Runnable {
                     
                 inputMap.put(KeyStroke.getKeyStroke("DOWN"), "down2Action");
                 actionMap.put("down2Action", down2Action);
+                
+                if(dir == false){
+                    ballx += 1;
+                }
+                else{
+                    ballx-= 1;
+                }
+                
+                if (bally < p1y && bally > p1y-100 && ballx == 25){
+                    dir = !dir;
+                }
+                
+                if (bally < p2y && bally > p2y-100 && ballx == 435){
+                    dir = !dir;
+                }
+                
                 panel.repaint();
                 animate.sleep(5);
 
@@ -120,4 +142,3 @@ public class PingPong extends JPanel implements Runnable {
     }
 
 }
-
