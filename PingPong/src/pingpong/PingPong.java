@@ -125,7 +125,7 @@ public class PingPong extends JPanel implements Runnable {
                 }
                 
                 panel.repaint();
-                animate.sleep(5);
+                animate.sleep(10);
 
             }
         } catch (InterruptedException e) {
