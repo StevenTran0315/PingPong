@@ -11,7 +11,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.lang.Object;
 import javax.swing.InputMap;
-
+import java.util.Random;
 /**
  *
  * @author S331461152
@@ -21,12 +21,12 @@ public class PingPong extends JPanel implements Runnable {
     Thread animate;
     static PingPong panel = new PingPong();
     static JFrame frame = new JFrame("Pong");     
-
+    Random random = new Random();
     int p1y = 25;
     int p2y = 25;  
     int bally = 170;
     int ballx = 350;
-    boolean dir = false;
+    boolean dir = random.nextBoolean();
     
     @Override
     public void paintComponent(Graphics g) {
@@ -139,6 +139,7 @@ public class PingPong extends JPanel implements Runnable {
     private void Restart(){
         bally =  170;
         ballx = 350;
+        dir =  random.nextBoolean();
     }
     public static void main(String[] args) {
         // TODO code application logic here
