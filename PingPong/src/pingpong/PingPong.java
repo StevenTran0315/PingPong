@@ -25,7 +25,7 @@ public class PingPong extends JPanel implements Runnable {
     int p1y = 25;
     int p2y = 25;  
     int bally = 170;
-    int ballx = 230;
+    int ballx = 350;
     boolean dir = false;
     
     @Override
@@ -34,7 +34,7 @@ public class PingPong extends JPanel implements Runnable {
         g.setColor(Color.black);
         g.fillRect(25, p1y, 25, 100);
         g.setColor(Color.black);
-        g.fillRect(435, p2y, 25, 100);
+        g.fillRect(700, p2y, 25, 100);
         g.fillOval(ballx, bally, 20, 20);
         
     }
@@ -53,7 +53,7 @@ public class PingPong extends JPanel implements Runnable {
     public void run() {
         Action upAction = new AbstractAction(){
               public void actionPerformed(ActionEvent e) {
-                  p1y -=10;
+                  p1y -=20;
                   if(p1y < 0){
                       p1y = 0;
                   }
@@ -63,9 +63,9 @@ public class PingPong extends JPanel implements Runnable {
           };
         Action downAction = new AbstractAction(){
               public void actionPerformed(ActionEvent e) {
-                  p1y +=10;
-                 if (p1y >350){
-                      p1y = 350;
+                  p1y +=20;
+                 if (p1y >470){
+                      p1y = 470;
                   }
                   panel.repaint();
               }
@@ -84,8 +84,8 @@ public class PingPong extends JPanel implements Runnable {
               public void actionPerformed(ActionEvent e) {
                   p2y +=20;
                
-                  if (p2y >350){
-                      p2y = 350;
+                  if (p2y >470){
+                      p2y = 470;
                   }
                   panel.repaint();
               }
@@ -116,28 +116,37 @@ public class PingPong extends JPanel implements Runnable {
                     ballx-= 1;
                 }
                 
-                if (bally < p1y && bally > p1y-100 && ballx == 25){
+                if (bally > p1y && bally < p1y+100 && ballx == 50){
                     dir = !dir;
                 }
                 
-                if (bally < p2y && bally > p2y-100 && ballx == 435){
+                if (bally > p2y && bally < p2y+100 && ballx == 680){
                     dir = !dir;
                 }
                 
+                if (ballx < 0 || ballx > 750){
+                    Restart();
+                }
                 panel.repaint();
-                animate.sleep(10);
+                animate.sleep(3);
 
             }
         } catch (InterruptedException e) {
 
         }
     }
+    
+    private void Restart(){
+        bally =  170;
+        ballx = 350;
+    }
     public static void main(String[] args) {
         // TODO code application logic here
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
 
-        frame.setSize(500, 500);
+        frame.setSize(750, 600);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
