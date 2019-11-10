@@ -20,7 +20,8 @@ public class PingPong extends JPanel implements Runnable {
 
     Thread animate;
     static PingPong panel = new PingPong();
-    static JFrame frame = new JFrame("Pong");     
+    static JFrame frame = new JFrame("Pong");    
+    
     Random random = new Random();
     int p1y = 25;
     int p2y = 25;  
@@ -30,14 +31,32 @@ public class PingPong extends JPanel implements Runnable {
     int yVel = 1;
     boolean dir = random.nextBoolean();
     
+    int score1=0;
+    int score2=0;
+    int increase=1;
+    Graphics gg;
+    Font scoreFont = new Font ("Impact", 1, 30); 
+    
+  
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        //for updating score
+        gg=g;
+        //change score font
+        g.setFont (scoreFont);
+        
         g.setColor(Color.black);
         g.fillRect(25, p1y, 10, 100);
         g.setColor(Color.black);
         g.fillRect(685, p2y, 10, 100);
         g.fillOval(ballx, bally, 20, 20);
+        
+        
+        //Score 
+        g.drawString(String.valueOf(score1), getWidth()/4,50);
+        g.drawString(String.valueOf(score2), 563,50);
         
     }
 
@@ -128,6 +147,7 @@ public class PingPong extends JPanel implements Runnable {
                     dir = !dir;
                 }
                 
+
                 if (bally<=0) {
                   yVel = -yVel;
                 }
@@ -137,6 +157,12 @@ public class PingPong extends JPanel implements Runnable {
                 }
                 if (ballx < 0 || ballx > 750){
                     Restart();
+                    s1();
+                }
+                
+                else if (ballx > 750){
+                    Restart();
+                    s2();
                 }
                 panel.repaint();
                 animate.sleep(3);
@@ -152,10 +178,23 @@ public class PingPong extends JPanel implements Runnable {
         ballx = 350;
         dir =  random.nextBoolean();
     }
+    
+    public void s1(){
+        score2=score2+increase;
+        gg.drawString(String.valueOf(score2),getWidth()/2,50);
+    }
+    
+    public void s2(){
+        score1=score1+increase;
+        gg.drawString(String.valueOf(score1),563,70);
+    }
     public static void main(String[] args) {
         // TODO code application logic here
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(panel);
+        
+        //JLabel score = new JLabel("0:0");
+        //panel.add(score);
 
         frame.setSize(750, 600);
         frame.setResizable(false);
