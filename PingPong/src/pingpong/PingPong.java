@@ -155,7 +155,7 @@ public class PingPong extends JPanel implements Runnable {
                 if (bally>=550) {
                   yVel = -yVel;  
                 }
-                if (ballx < 0 || ballx > 750){
+                if (ballx < 0){
                     Restart();
                     s1();
                 }
