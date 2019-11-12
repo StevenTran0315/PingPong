@@ -17,6 +17,7 @@ public class Ball extends Thread {
     static int ballx = 350;
     int xVel = 1;
     int yVel = 1;
+    Player player = new Player();
     Random random = new Random();
     boolean dir = random.nextBoolean();
     int score1 = 0;
@@ -51,6 +52,14 @@ public class Ball extends Thread {
 
                 if (bally <= 0) {
                     yVel = -yVel;
+                }
+
+                if (bally >= player.p1y && bally <= player.p1y + 100 && ballx >= 15 && ballx <= 35) {
+                    dir = !dir;
+                }
+
+                if (bally >= player.p2y && bally <= player.p2y + 100 && ballx >= 665 && ballx <= 685) {
+                    dir = !dir;
                 }
 
                 if (bally >= 550) {

@@ -5,8 +5,9 @@
  */
 package pingpong;
 
-
 import java.awt.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.InputMap;
 
@@ -23,7 +24,8 @@ public class PingPong extends JPanel implements Runnable {
     static Ball ball = new Ball();
     static Menu menu = new Menu();
     static Score score = new Score();
-
+    InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+    ActionMap actionMap = this.getActionMap();
     Graphics gg;
     Font scoreFont = new Font("Impact", 1, 30);
 
@@ -55,56 +57,77 @@ public class PingPong extends JPanel implements Runnable {
     }
 
     public void run() {
-        InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = this.getActionMap();
 
-            while (true) {
-                
-                inputMap.put(KeyStroke.getKeyStroke("W"), "upAction");
-                actionMap.put("upAction", player.upAction);
+        while (true) {
 
-                inputMap.put(KeyStroke.getKeyStroke("S"), "downAction");
-                actionMap.put("downAction", player.downAction);
+            inputMap.put(KeyStroke.getKeyStroke("pressed W"), "upAction");
+            actionMap.put("upAction", player.upAction);
 
-                inputMap.put(KeyStroke.getKeyStroke("UP"), "up2Action");
-                actionMap.put("up2Action", player.up2Action);
+            inputMap.put(KeyStroke.getKeyStroke("released W"), "stopUp");
+            actionMap.put("stopUp", player.stopUp);
+            
+            inputMap.put(KeyStroke.getKeyStroke("pressed S"), "downAction");
+            actionMap.put("downAction", player.downAction);
 
-                inputMap.put(KeyStroke.getKeyStroke("DOWN"), "down2Action");
-                actionMap.put("down2Action", player.down2Action);
+            inputMap.put(KeyStroke.getKeyStroke("released S"), "stopDown");
+            actionMap.put("stopDown", player.stopDown);
+            
+            inputMap.put(KeyStroke.getKeyStroke("pressed UP"), "up2Action");
+            actionMap.put("up2Action", player.up2Action);
 
-                if (ball.bally >= player.p1y && ball.bally <= player.p1y + 100 && ball.ballx >= 15 && ball.ballx <= 35) {
-                    ball.dir = !ball.dir;
-                }
+            inputMap.put(KeyStroke.getKeyStroke("released UP"), "stop2");
+            actionMap.put("stop2", player.stop2Up);
+            
+            inputMap.put(KeyStroke.getKeyStroke("pressed DOWN"), "down2Action");
+            actionMap.put("down2Action", player.down2Action);
 
-                if (ball.bally >= player.p2y && ball.bally <= player.p2y + 100 && ball.ballx >= 665 && ball.ballx <= 685) {
-                    ball.dir = !ball.dir;
-                }
-
-                panel.repaint();
-                
+            inputMap.put(KeyStroke.getKeyStroke("released DOWN"), "stop2Down");
+            actionMap.put("stop2Down", player.stop2Down);
+            
+            if(player.p1up){
+                player.paddleUp(1);
             }
-  
+            
+            if(player.p2up){
+                player.paddleUp(2);
+            }
+            
+            if(player.p1down){
+                player.paddleDown(1);
+            }
+            
+            if(player.p2down){
+                player.paddleDown(2);
+            }
+            panel.repaint();
+            try {
+                animate.sleep(4);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PingPong.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     public static void main(String[] args) {
         // TODO code application logic here
-        while(true){
-             menu.setVisible(true);
+        while (true) {
+            menu.setVisible(true);
             if (menu.start) {
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    frame.add(panel);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(panel);
 
-                    //JLabel score = new JLabel("0:0");
-                    //panel.add(score);
-                    frame.setSize(750, 600);
-                    frame.setResizable(false);
-                    frame.setVisible(true);
+                //JLabel score = new JLabel("0:0");
+                //panel.add(score);
+                frame.setSize(750, 600);
+                frame.setResizable(false);
+                frame.setVisible(true);
 
-                    ball.start();
-                    break;
-                  
-                }
-            
+                ball.start();
+                break;
+
+            }
+
         }
     }
 
