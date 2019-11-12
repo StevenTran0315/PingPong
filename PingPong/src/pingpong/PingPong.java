@@ -41,7 +41,23 @@ public class PingPong extends JPanel implements Runnable {
         g.fillRect(25, player.p1y, 10, 100);
         g.setColor(Color.black);
         g.fillRect(685, player.p2y, 10, 100);
+
+        switch (menu.MapNum) {
+            case 1:
+                g.fillRect(350, 250, 7, 150);
+                break;
+            case 2:
+                break;
+            case 3:
+                g.fillRect(350, 0, 7, 150);
+                g.fillRect(350, 450, 7, 150);
+                break;
+            default:
+                break;
+        }
+
         g.fillOval(ball.ballx, ball.bally, 20, 20);
+
         //Score 
         g.drawString(String.valueOf(ball.score1), getWidth() / 4, 50);
         g.drawString(String.valueOf(ball.score2), 563, 50);
@@ -65,40 +81,60 @@ public class PingPong extends JPanel implements Runnable {
 
             inputMap.put(KeyStroke.getKeyStroke("released W"), "stopUp");
             actionMap.put("stopUp", player.stopUp);
-            
+
             inputMap.put(KeyStroke.getKeyStroke("pressed S"), "downAction");
             actionMap.put("downAction", player.downAction);
 
             inputMap.put(KeyStroke.getKeyStroke("released S"), "stopDown");
             actionMap.put("stopDown", player.stopDown);
-            
+
             inputMap.put(KeyStroke.getKeyStroke("pressed UP"), "up2Action");
             actionMap.put("up2Action", player.up2Action);
 
             inputMap.put(KeyStroke.getKeyStroke("released UP"), "stop2");
             actionMap.put("stop2", player.stop2Up);
-            
+
             inputMap.put(KeyStroke.getKeyStroke("pressed DOWN"), "down2Action");
             actionMap.put("down2Action", player.down2Action);
 
             inputMap.put(KeyStroke.getKeyStroke("released DOWN"), "stop2Down");
             actionMap.put("stop2Down", player.stop2Down);
-            
-            if(player.p1up){
+
+            if (player.p1up) {
                 player.paddleUp(1);
             }
-            
-            if(player.p2up){
+
+            if (player.p2up) {
                 player.paddleUp(2);
             }
-            
-            if(player.p1down){
+
+            if (player.p1down) {
                 player.paddleDown(1);
             }
-            
-            if(player.p2down){
+
+            if (player.p2down) {
                 player.paddleDown(2);
             }
+            ball.Barriers(menu.MapNum);
+            /*switch (menu.MapNum) {
+                case 1:
+                    if (ball.bally >= 250 && ball.bally <= 400 && ball.ballx >= 350 && ball.ballx <= 360) {
+                         ball.dir = !ball.dir;
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (ball.bally >= 0 && ball.bally <= 150 && ball.ballx >= 345 && ball.ballx <= 355) {
+                        ball.dir = !ball.dir;
+                    }
+                    if (ball.bally >= 450 && ball.bally <= 600 && ball.ballx >= 345 && ball.ballx <= 355) {
+                        ball.dir = !ball.dir;
+                    }
+                    break;
+                default:
+                    break;
+            }*/
             panel.repaint();
             try {
                 animate.sleep(4);

@@ -13,8 +13,8 @@ import java.util.Random;
  */
 public class Ball extends Thread {
 
-    static int bally = 170;
-    static int ballx = 350;
+     int bally = 170;
+     int ballx = 350;
     int xVel = 1;
     int yVel = 1;
     Player player = new Player();
@@ -62,10 +62,12 @@ public class Ball extends Thread {
                     dir = !dir;
                 }
 
+             
+
                 if (bally >= 550) {
                     yVel = -yVel;
                 }
-                Thread.sleep(4);
+                Thread.sleep(2);
             }
         } catch (InterruptedException e) {
         }
@@ -76,5 +78,27 @@ public class Ball extends Thread {
         bally = 170;
         ballx = 350;
         dir = random.nextBoolean();
+    }
+    
+    public void Barriers(int Map){
+          switch (Map) {
+                case 1:
+                    if (bally >= 250 && bally <= 400 && ballx >= 350 && ballx <= 360) {
+                         dir = !dir;
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    if (bally >= 0 && bally <= 150 && ballx >= 345 && ballx <= 355) {
+                        dir = !dir;
+                    }
+                    if (bally >= 450 && bally <= 600 && ballx >= 345 && ballx <= 355) {
+                        dir = !dir;
+                    }
+                    break;
+                default:
+                    break;
+            }
     }
 }

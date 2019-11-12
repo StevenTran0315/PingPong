@@ -39,6 +39,7 @@ public class Menu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,6 +89,9 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setVisible(false);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pingpong/images/Map2.jpg"))); // NOI18N
 
+        jLabel4.setVisible(false);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pingpong/images/Map3.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -95,27 +99,33 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton3)
-                .addGap(17, 17, 17)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jButton3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addComponent(jButton4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton4))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,7 +148,7 @@ public class Menu extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,8 +173,8 @@ public class Menu extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         MapNum++;
-        if (MapNum >= 2) {
-            MapNum = 2;
+        if (MapNum >= 3) {
+            MapNum = 3;
         }
         MapSelect();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -198,10 +208,17 @@ public class Menu extends javax.swing.JFrame {
             case 1:
                 jLabel1.setVisible(true);
                 jLabel3.setVisible(false);
+                jLabel4.setVisible(false);
                 break;
             case 2:
                 jLabel1.setVisible(false);
                 jLabel3.setVisible(true);
+                jLabel4.setVisible(false);
+                break;
+            case 3:
+                jLabel1.setVisible(false);
+                jLabel3.setVisible(false);
+                jLabel4.setVisible(true);
                 break;
             default:
                 break;
@@ -251,6 +268,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
