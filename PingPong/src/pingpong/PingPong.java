@@ -115,26 +115,8 @@ public class PingPong extends JPanel implements Runnable {
             if (player.p2down) {
                 player.paddleDown(2);
             }
-            ball.Barriers(menu.MapNum);
-            /*switch (menu.MapNum) {
-                case 1:
-                    if (ball.bally >= 250 && ball.bally <= 400 && ball.ballx >= 350 && ball.ballx <= 360) {
-                         ball.dir = !ball.dir;
-                    }
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    if (ball.bally >= 0 && ball.bally <= 150 && ball.ballx >= 345 && ball.ballx <= 355) {
-                        ball.dir = !ball.dir;
-                    }
-                    if (ball.bally >= 450 && ball.bally <= 600 && ball.ballx >= 345 && ball.ballx <= 355) {
-                        ball.dir = !ball.dir;
-                    }
-                    break;
-                default:
-                    break;
-            }*/
+            ball.GameMode(menu.MapNum);
+        
             panel.repaint();
             try {
                 animate.sleep(4);
