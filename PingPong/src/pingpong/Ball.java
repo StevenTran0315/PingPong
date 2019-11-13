@@ -25,7 +25,7 @@ public class Ball extends Thread {
     int score1 = 0;
     int score2 = 0;
     int Map;
-    String winner = "";
+
     public void s1() {
         score2++;
     }
