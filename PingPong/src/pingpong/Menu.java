@@ -16,7 +16,9 @@ public class Menu extends javax.swing.JFrame {
      */
     static Instructions menu2 = new Instructions();
     int MapNum = 1;
+    String colour;
     boolean start;
+
     public Menu() {
         initComponents();
 
@@ -182,7 +184,7 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         MapNum++;
@@ -213,6 +215,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        colour = String.valueOf(jComboBox1.getSelectedItem());
         start = true;
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -222,9 +225,9 @@ public class Menu extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void MapSelect(){
+    private void MapSelect() {
 
-         switch (MapNum) {
+        switch (MapNum) {
             case 1:
                 jLabel1.setVisible(true);
                 jLabel3.setVisible(false);
@@ -244,6 +247,7 @@ public class Menu extends javax.swing.JFrame {
                 break;
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -270,12 +274,12 @@ public class Menu extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-    
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Menu().setVisible(true);
-                
+
             }
         });
     }

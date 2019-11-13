@@ -10,6 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.InputMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -25,7 +27,7 @@ public class PingPong extends JPanel implements Runnable {
     static Menu menu = new Menu();
     static Score score = new Score();
     static Instructions menu2 = new Instructions();
-
+    Timer timer = new Timer();
     JButton jButton1 = new javax.swing.JButton();
     InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
     ActionMap actionMap = this.getActionMap();
@@ -40,10 +42,40 @@ public class PingPong extends JPanel implements Runnable {
         //change score font
         g.setFont(scoreFont);
 
-        g.setColor(Color.black);
-        g.fillRect(25, player.p1y, 10, 100);
-        g.setColor(Color.black);
-        g.fillRect(685, player.p2y, 10, 100);
+        switch (menu.colour) {
+            case "Black":
+                g.setColor(Color.black);
+                g.fillRect(25, player.p1y, 10, 100);
+                //g.setColor(Color.black);
+                g.fillRect(685, player.p2y, 10, 100);
+                break;
+            case "Grey":
+                g.setColor(Color.gray);
+                g.fillRect(25, player.p1y, 10, 100);
+                //g.setColor(Color.gray);
+                g.fillRect(685, player.p2y, 10, 100);
+                break;
+            case "Purple":
+                g.setColor(Color.magenta);
+                g.fillRect(25, player.p1y, 10, 100);
+                //g.setColor(Color.magenta);
+                g.fillRect(685, player.p2y, 10, 100);
+                break;
+            case "Orange":
+                g.setColor(Color.orange);
+                g.fillRect(25, player.p1y, 10, 100);
+                //g.setColor(Color.orange);
+                g.fillRect(685, player.p2y, 10, 100);
+                break;
+            case "Blue":
+                g.setColor(Color.blue);
+                g.fillRect(25, player.p1y, 10, 100);
+                //g.setColor(Color.blue);
+                g.fillRect(685, player.p2y, 10, 100);
+                break;
+            default:
+                break;
+        }
 
         switch (menu.MapNum) {
             case 1:
@@ -64,15 +96,30 @@ public class PingPong extends JPanel implements Runnable {
         //Score 
         g.drawString(String.valueOf(ball.score1), getWidth() / 4, 50);
         g.drawString(String.valueOf(ball.score2), 563, 50);
-        
+
         if (ball.score1 == 7) {
             g.drawString("Player One Wins", 245, 220);
             ball.stop();
+            animate.suspend();
+            TimerTask task = new TimerTask() {
+                public void run() {
+                    System.exit(0);
+                }
+            };
+            timer.schedule(task, 5000);
+
         } else if (ball.score2 == 7) {
             g.drawString("Player Two Wins", 245, 220);
             ball.stop();
+            animate.suspend();
+            TimerTask task = new TimerTask() {
+                public void run() {
+                    System.exit(0);
+                }
+            };
+            timer.schedule(task, 5000);
         }
-        
+
     }
 
     /**
@@ -141,9 +188,9 @@ public class PingPong extends JPanel implements Runnable {
 
     public static void main(String[] args) {
         // TODO code application logic here
+
         while (true) {
             menu.setVisible(true);
-
             menu.setResizable(false);
             if (menu.start) {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

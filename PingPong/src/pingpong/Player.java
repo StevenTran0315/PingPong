@@ -15,8 +15,8 @@ import javax.swing.Action;
  */
 public class Player {
 
-    static int p1y = 25;
-    static int p2y = 25;
+    static int p1y = 250;
+    static int p2y = 250;
     boolean p1up;
     boolean p2up;
     boolean p1down;
