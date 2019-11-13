@@ -5,59 +5,63 @@
  */
 package pingpong;
 
-import java.lang.Runnable;
 import java.awt.*;
-import java.awt.event.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
-import java.lang.Object;
 import javax.swing.InputMap;
-import java.util.Random;
+
 /**
  *
  * @author S331461152
  */
 public class PingPong extends JPanel implements Runnable {
 
-    Thread animate;
+    static Thread animate;
     static PingPong panel = new PingPong();
-    static JFrame frame = new JFrame("Pong");    
-    
-    Random random = new Random();
-    int p1y = 25;
-    int p2y = 25;  
-    int bally = 170;
-    int ballx = 230;
-    int xVel = 1;
-    int yVel = 1;
-    boolean dir = random.nextBoolean();
-    
-    int score1=0;
-    int score2=0;
-    int increase=1;
+    static JFrame frame = new JFrame("Pong");
+    static Player player = new Player();
+    static Ball ball = new Ball();
+    static Menu menu = new Menu();
+    static Score score = new Score();
+    InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+    ActionMap actionMap = this.getActionMap();
     Graphics gg;
-    Font scoreFont = new Font ("Impact", 1, 30); 
-    
-  
-    
+    Font scoreFont = new Font("Impact", 1, 30);
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         //for updating score
-        gg=g;
+        gg = g;
         //change score font
-        g.setFont (scoreFont);
-        
+        g.setFont(scoreFont);
+
         g.setColor(Color.black);
-        g.fillRect(25, p1y, 10, 100);
+        g.fillRect(25, player.p1y, 10, 100);
         g.setColor(Color.black);
-        g.fillRect(685, p2y, 10, 100);
-        g.fillOval(ballx, bally, 20, 20);
-        
-        
+        g.fillRect(685, player.p2y, 10, 100);
+
+        switch (menu.MapNum) {
+            case 1:
+                g.fillRect(350, 250, 7, 150);
+                break;
+            case 2:
+                break;
+            case 3:
+                g.fillRect(350, 0, 7, 150);
+                g.fillRect(350, 450, 7, 150);
+                break;
+            default:
+                break;
+        }
+
+        g.fillOval(ball.ballx, ball.bally, 20, 20);
+
         //Score 
-        g.drawString(String.valueOf(score1), getWidth()/4,50);
-        g.drawString(String.valueOf(score2), 563,50);
-        
+        g.drawString(String.valueOf(ball.score1), getWidth() / 4, 50);
+        g.drawString(String.valueOf(ball.score2), 563, 50);
+
     }
 
     /**
@@ -66,139 +70,83 @@ public class PingPong extends JPanel implements Runnable {
     public PingPong() {
         animate = new Thread(this);
         animate.start();
- 
     }
-      
-    
-  
+
     public void run() {
-        Action upAction = new AbstractAction(){
-              public void actionPerformed(ActionEvent e) {
-                  p1y -=20;
-                  if(p1y < 0){
-                      p1y = 0;
-                  }
-                
-                  panel.repaint();
-              }
-          };
-        Action downAction = new AbstractAction(){
-              public void actionPerformed(ActionEvent e) {
-                  p1y +=20;
-                 if (p1y >470){
-                      p1y = 470;
-                  }
-                  panel.repaint();
-              }
-          };
-        Action up2Action = new AbstractAction(){
-              public void actionPerformed(ActionEvent e) {
-                  p2y -=20;
-                  if(p2y < 0){
-                      p2y = 0;
-                  }
-  
-                  panel.repaint();
-              }
-          };
-        Action down2Action = new AbstractAction(){
-              public void actionPerformed(ActionEvent e) {
-                  p2y +=20;
-               
-                  if (p2y >470){
-                      p2y = 470;
-                  }
-                  panel.repaint();
-              }
-          };
 
-        InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = this.getActionMap();
+        while (true) {
 
-        try {
-            while (true) {
-              
-                inputMap.put(KeyStroke.getKeyStroke("W"), "upAction");
-                actionMap.put("upAction", upAction);
-                    
-                inputMap.put(KeyStroke.getKeyStroke("S"), "downAction");
-                actionMap.put("downAction", downAction);
+            inputMap.put(KeyStroke.getKeyStroke("pressed W"), "upAction");
+            actionMap.put("upAction", player.upAction);
 
-                inputMap.put(KeyStroke.getKeyStroke("UP"), "up2Action");
-                actionMap.put("up2Action", up2Action);
-                    
-                inputMap.put(KeyStroke.getKeyStroke("DOWN"), "down2Action");
-                actionMap.put("down2Action", down2Action);
-                
-                if(dir == false){
-                    ballx += xVel;
-                    bally += yVel;
-                }
-                else{
-                    ballx -= xVel; 
-                    bally += yVel;
-                }
-                
-                if (bally >= p1y && bally <= p1y+100 && ballx == 35){
-                    dir = !dir;
-                }
-                
-                if (bally >= p2y && bally <= p2y+100 && ballx == 665){
-                    dir = !dir;
-                }
-                
+            inputMap.put(KeyStroke.getKeyStroke("released W"), "stopUp");
+            actionMap.put("stopUp", player.stopUp);
 
-                if (bally<=0) {
-                  yVel = -yVel;
-                }
-                
-                if (bally>=550) {
-                  yVel = -yVel;  
-                }
-                if (ballx < 0){
-                    Restart();
-                    s1();
-                }
-                
-                else if (ballx > 750){
-                    Restart();
-                    s2();
-                }
-                panel.repaint();
-                animate.sleep(3);
+            inputMap.put(KeyStroke.getKeyStroke("pressed S"), "downAction");
+            actionMap.put("downAction", player.downAction);
 
+            inputMap.put(KeyStroke.getKeyStroke("released S"), "stopDown");
+            actionMap.put("stopDown", player.stopDown);
+
+            inputMap.put(KeyStroke.getKeyStroke("pressed UP"), "up2Action");
+            actionMap.put("up2Action", player.up2Action);
+
+            inputMap.put(KeyStroke.getKeyStroke("released UP"), "stop2");
+            actionMap.put("stop2", player.stop2Up);
+
+            inputMap.put(KeyStroke.getKeyStroke("pressed DOWN"), "down2Action");
+            actionMap.put("down2Action", player.down2Action);
+
+            inputMap.put(KeyStroke.getKeyStroke("released DOWN"), "stop2Down");
+            actionMap.put("stop2Down", player.stop2Down);
+
+            if (player.p1up) {
+                player.paddleUp(1);
             }
-        } catch (InterruptedException e) {
 
+            if (player.p2up) {
+                player.paddleUp(2);
+            }
+
+            if (player.p1down) {
+                player.paddleDown(1);
+            }
+
+            if (player.p2down) {
+                player.paddleDown(2);
+            }
+            ball.GameMode(menu.MapNum);
+        
+            panel.repaint();
+            try {
+                animate.sleep(4);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(PingPong.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
-    
-    private void Restart(){
-        bally =  170;
-        ballx = 350;
-        dir =  random.nextBoolean();
-    }
-    
-    public void s1(){
-        score2=score2+increase;
-        gg.drawString(String.valueOf(score2),getWidth()/2,50);
-    }
-    
-    public void s2(){
-        score1=score1+increase;
-        gg.drawString(String.valueOf(score1),563,70);
-    }
+
     public static void main(String[] args) {
         // TODO code application logic here
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(panel);
-        
-        //JLabel score = new JLabel("0:0");
-        //panel.add(score);
+        while (true) {
+            menu.setVisible(true);
+            if (menu.start) {
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.add(panel);
 
-        frame.setSize(750, 600);
-        frame.setResizable(false);
-        frame.setVisible(true);
+                //JLabel score = new JLabel("0:0");
+                //panel.add(score);
+                frame.setSize(750, 600);
+                frame.setResizable(false);
+                frame.setVisible(true);
+
+                ball.start();
+                break;
+
+            }
+
+        }
     }
 
 }
