@@ -24,6 +24,9 @@ public class PingPong extends JPanel implements Runnable {
     static Ball ball = new Ball();
     static Menu menu = new Menu();
     static Score score = new Score();
+    static Instructions menu2 = new Instructions();
+
+    JButton jButton1 = new javax.swing.JButton();
     InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
     ActionMap actionMap = this.getActionMap();
     Graphics gg;
@@ -61,7 +64,15 @@ public class PingPong extends JPanel implements Runnable {
         //Score 
         g.drawString(String.valueOf(ball.score1), getWidth() / 4, 50);
         g.drawString(String.valueOf(ball.score2), 563, 50);
-
+        
+        if (ball.score1 == 7) {
+            g.drawString("Player One Wins", 245, 220);
+            ball.stop();
+        } else if (ball.score2 == 7) {
+            g.drawString("Player Two Wins", 245, 220);
+            ball.stop();
+        }
+        
     }
 
     /**
@@ -70,6 +81,7 @@ public class PingPong extends JPanel implements Runnable {
     public PingPong() {
         animate = new Thread(this);
         animate.start();
+
     }
 
     public void run() {
@@ -116,7 +128,7 @@ public class PingPong extends JPanel implements Runnable {
                 player.paddleDown(2);
             }
             ball.GameMode(menu.MapNum);
-        
+
             panel.repaint();
             try {
                 animate.sleep(4);
@@ -131,6 +143,8 @@ public class PingPong extends JPanel implements Runnable {
         // TODO code application logic here
         while (true) {
             menu.setVisible(true);
+
+            menu.setResizable(false);
             if (menu.start) {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.add(panel);

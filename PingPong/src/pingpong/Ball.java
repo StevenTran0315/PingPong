@@ -17,13 +17,15 @@ public class Ball extends Thread {
     int ballx = 350;
     int xVel = 1;
     int yVel = 1;
+    
     Player player = new Player();
     Random random = new Random();
     boolean dir = random.nextBoolean();
+    
     int score1 = 0;
     int score2 = 0;
     int Map;
-
+    String winner = "";
     public void s1() {
         score2++;
     }
@@ -46,8 +48,23 @@ public class Ball extends Thread {
     }
 
     public void Restart() {
-        bally = 170;
-        ballx = 350;
+        switch (Map) {
+            case 1:
+                bally = 150;
+                ballx = 350;
+                break;
+            case 2:
+                bally = 250;
+                ballx = 350;
+                break;
+            case 3:
+                bally = 250;
+                ballx = 350;
+                break;
+            default:
+                break;
+        }
+
         dir = random.nextBoolean();
     }
 
