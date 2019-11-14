@@ -12,19 +12,21 @@ import java.util.Random;
  * @author Steven
  */
 public class Ball extends Thread {
-
+    //declaring intial ball positions and velocities
     int bally = 170;
     int ballx = 350;
     int xVel = 1;
     int yVel = 1;
     
     Player player = new Player();
-    Random random = new Random();
-    boolean dir = random.nextBoolean();
+    Random random = new Random();      //allowing the use of random
+    boolean dir = random.nextBoolean();   //setting random direction
     
+    //setting initial scores
     int score1 = 0;
     int score2 = 0;
-    int Map;
+    
+    int Map;      
 
     public void s1() {
         score2++;
@@ -47,6 +49,8 @@ public class Ball extends Thread {
 
     }
 
+    //respawn ball at different positions depending on the map type
+    //to avoid obstacles
     public void Restart() {
         switch (Map) {
             case 1:
@@ -65,14 +69,18 @@ public class Ball extends Thread {
                 break;
         }
 
-        dir = random.nextBoolean();
+        dir = random.nextBoolean();    //random initial direction of the ball
     }
 
+    //getting selected map type
     public void GameMode(int MapNum) {
         Map = MapNum;
     }
 
+    //changing directon of ball depending on different conditions
     private void Direction() {
+        //changing ball's x-direction (+=/-=) depending on collision with paddles
+        //always adding yVel (+=), but setting it to negative, to subtract when necessary 
         if (dir == false) {
             ballx += xVel;
             bally += yVel;
@@ -80,7 +88,8 @@ public class Ball extends Thread {
             ballx -= xVel;
             bally += yVel;
         }
-
+        
+        //repsawn the ball and update score if the ball moves past a player's paddle
         if (ballx < 0) {
             Restart();
             s1();
@@ -89,13 +98,17 @@ public class Ball extends Thread {
             s2();
         }
 
+        //reverse ball's y-velocity if ball is at the bottom of the map area
+        //(causing the ball to bounce)
         if (bally <= 0) {
             yVel = -yVel;
         }
-
+        //reverse ball's y-velocity if ball is at the top of the map area
         if (bally >= 550) {
             yVel = -yVel;
         }
+        
+        //changing boolean value of dir if ball collides with the paddles hitbox  
         if (bally >= player.p1y && bally <= player.p1y + 100 && ballx >= 15 && ballx <= 35) {
             dir = !dir;
         }
@@ -106,6 +119,8 @@ public class Ball extends Thread {
 
     }
 
+    //changing ball's x-direction when it collides with obstacles
+    //there are different obstacles depending on the selected map type
     private void Barriers() {
         switch (Map) {
             case 1:

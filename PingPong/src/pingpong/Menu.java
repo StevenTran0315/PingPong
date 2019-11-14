@@ -187,17 +187,17 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        MapNum++;
-        if (MapNum >= 3) {
+        MapNum++;         //displaying next map when button is pressed
+        if (MapNum >= 3) {   //making sure button is always one press from going back to previous map
             MapNum = 3;
         }
-        MapSelect();
+        MapSelect();      
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        MapNum--;
-        if (MapNum <= 1) {
+        MapNum--;       //displaying previous map when button is pressed
+        if (MapNum <= 1) {   //making sure button is always one press from going back to next map
             MapNum = 1;
         }
         MapSelect();
@@ -205,8 +205,8 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        menu2.setVisible(true);
-        dispose();
+        menu2.setVisible(true);     //display instructions frame
+        dispose();       //close menu frame
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -215,18 +215,19 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        colour = String.valueOf(jComboBox1.getSelectedItem());
+        colour = String.valueOf(jComboBox1.getSelectedItem());    //getting colour selection from ComboBox
         start = true;
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        System.exit(0);    //exits program 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    //only displays one map at a time by making the others invisible
     private void MapSelect() {
-
+        
         switch (MapNum) {
             case 1:
                 jLabel1.setVisible(true);
