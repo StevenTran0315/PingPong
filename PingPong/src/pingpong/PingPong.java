@@ -26,7 +26,6 @@ public class PingPong extends JPanel implements Runnable {
     static Player player = new Player();
     static Ball ball = new Ball();
     static Menu menu = new Menu();
-    static Score score = new Score();
     static Instructions menu2 = new Instructions();
     Timer timer = new Timer();
     JButton jButton1 = new javax.swing.JButton();
