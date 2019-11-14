@@ -18,7 +18,8 @@ import java.util.TimerTask;
  * @author S331461152
  */
 public class PingPong extends JPanel implements Runnable {
-
+    
+    //instantiating objects
     static Thread animate;
     static PingPong panel = new PingPong();
     static JFrame frame = new JFrame("Pong");
